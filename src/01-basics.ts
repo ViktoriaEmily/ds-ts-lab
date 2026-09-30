@@ -1,6 +1,7 @@
-import {Friend, Colleague, ColleagueHistory} from './myTypes'
+import {Friend, Colleague, ColleagueHistory, EmailContact} from './myTypes'
 
 const friend1 = {
+
   name: "Paul Fleming",
   phone: "087-12345",
   age: 25,
