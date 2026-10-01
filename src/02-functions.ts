@@ -41,17 +41,17 @@ const newColleague = {
     cs.push(newColleague);
 }
 
-function sortColleagues(
-  colleagues: Colleague[],
-  sorter: (c1: Colleague, c2: Colleague) => number
-): EmailContact[] {
-  const sorted = colleagues.sort(sorter); // Colleague[] inferred
-  const result: EmailContact[] = sorted.map((ce) => ({ name: ce.name, email: ce.contact.email }));
-  return result 
-}
+// function sortColleagues(
+//   colleagues: Colleague[],
+//   sorter: (c1: Colleague, c2: Colleague) => number
+// ): EmailContact[] {
+//   const sorted = colleagues.sort(sorter); // Colleague[] inferred
+//   const result: EmailContact[] = sorted.map((ce) => ({ name: ce.name, email: ce.contact.email }));
+//   return result 
+// }
 
-console.log(sortColleagues(colleagues.current, (a, b) => a.contact.extension - b.contact.extension));
-console.log(sortColleagues(colleagues.current, (a, b) => a.name.length - b.name.length));
+// console.log(sortColleagues(colleagues.current, (a, b) => a.contact.extension - b.contact.extension));
+// console.log(sortColleagues(colleagues.current, (a, b) => a.name.length - b.name.length));
 
 //The type for the second argument of ‘sortColleagues’ is a callback (function) 
 // that takes two Colleague objects and returns a numeric value computed from comparing them. 
@@ -59,6 +59,24 @@ console.log(sortColleagues(colleagues.current, (a, b) => a.name.length - b.name.
 // test the new function. The first one provides a callback that sorts colleagues by extension number, 
 // and the second one uses the length of a colleague’s name as the sorting criteria. 
 // Run the script to see the results.
+
+function sortColleagues(
+  colleagues: Colleague[],
+  sorter: (c1: Colleague, c2: Colleague) => number,
+  max? : number
+): EmailContact[] {
+  let end = colleagues.length;
+  if (max !== undefined) {
+     end = max < 2 ? 1 : max
+  }
+  const sorted = colleagues.sort(sorter);
+  const fullResult =  sorted.map((ce) => ({ name: ce.name, email: ce.contact.email }));
+  return fullResult.slice(0,end)
+}
+// Test invocations
+console.log(sortColleagues(colleagues.current, (a, b) => (a.contact.extension - b.contact.extension),3));
+console.log(sortColleagues(colleagues.current, (a, b) => (a.name.length - b.name.length),1));
+console.log(sortColleagues(colleagues.current, (a, b) => (a.name.length - b.name.length))); // NEW
 
 
 addColleague(colleagues.current, "Sheild O Connell", "HR", "soc@here.com");
@@ -71,6 +89,9 @@ function findFriends (
 ): string[] {
     return friends.filter(c4).map((friend)=> `${friend.name} (${friend.age})`);
 }
+
+console.log(findFriends(friends, (friend) => friend.name.startsWith('Pa')));
+console.log(findFriends(friends, (friend) => friend.age < 35));
 
 // function findFriends(
 //     friends: Friend[],
@@ -89,8 +110,5 @@ function findFriends (
 //   const result: EmailContact[] = sorted.map((ce) => ({ name: ce.name, email: ce.contact.email }));
 //   return result 
 // }
-
-console.log(findFriends(friends, (friend) => friend.name.startsWith('Pa')));
-console.log(findFriends(friends, (friend) => friend.age < 35));
 
 
