@@ -112,7 +112,8 @@ console.log(findFriends(friends, (friend) => friend.age < 35));
 // }
 
 //function addInterest
-function addInterest(friend: Friend, interest: string): string[] {
+function addInterest(
+    friend: Friend, interest: string): string[] {
     if (!friend.interests) {
         friend.interests = [];
     }
